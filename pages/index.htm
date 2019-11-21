@@ -1,0 +1,12 @@
+title = "test"
+url = "/:all?*"
+==
+function onStart()
+{
+    $this['vuetober'] = [
+        'env' => app()->env,
+        'token' => Session::token(),
+    ];
+}
+==
+<!DOCTYPE html><html><head><meta charset=utf-8><meta content="IE=edge" http-equiv=X-UA-Compatible><meta name=viewport content="width=device-width,initial-scale=1"><meta name=vuetober content="{{ vuetober | json_encode }}"><title>site</title><link href=/themes/site/assets/js/about.d2ca25c2.js rel=prefetch><link href=/themes/site/assets/css/app.6a3133dc.css rel=preload as=style><link href=/themes/site/assets/js/app.c3e5b08e.js rel=preload as=script><link href=/themes/site/assets/js/chunk-vendors.1d62168f.js rel=preload as=script><link href=/themes/site/assets/css/app.6a3133dc.css rel=stylesheet></head><body><noscript><strong>We're sorry but site doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/themes/site/assets/js/chunk-vendors.1d62168f.js></script><script src=/themes/site/assets/js/app.c3e5b08e.js></script></body></html>
