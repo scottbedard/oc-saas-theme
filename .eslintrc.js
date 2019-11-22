@@ -1,28 +1,31 @@
+const production = process.env.NODE_ENV === 'production';
+
 module.exports = {
-  root: true,
-  env: {
-    node: true
-  },
-  'extends': [
-    'plugin:vue/essential',
-    'eslint:recommended'
-  ],
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
-    }
-  ]
-}
+    env: {
+        node: true,
+    },
+    extends: [
+        'plugin:vue/essential',
+        '@vue/airbnb',
+    ],
+    overrides: [
+        {
+            files: [
+                '**/__tests__/*.{j,t}s?(x)',
+                '**/tests/unit/**/*.spec.{j,t}s?(x)',
+            ],
+            env: {
+                jest: true,
+            },
+        },
+    ],
+    parserOptions: {
+        parser: 'babel-eslint',
+    },
+    root: true,
+    rules: {
+        indent: ['error', 4],
+        'no-console': production ? 'error' : 'off',
+        'no-debugger': production ? 'error' : 'off',
+    },
+};

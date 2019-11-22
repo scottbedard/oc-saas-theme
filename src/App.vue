@@ -8,7 +8,8 @@
 </style>
 
 <template>
-    <div id="app">
+    <div class="font-sans p-4" id="app">
         <h1 class="text-2xl text-red-500">Hello world</h1>
+        <router-view />
     </div>
 </template>
