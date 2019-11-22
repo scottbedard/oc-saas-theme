@@ -21,6 +21,14 @@ const routes = [
         path: '/about',
     },
     {
+        component: () => import(/* webpackChunkName: 'pricing' */ '@/pages/pricing/Pricing.vue'),
+        meta: {
+            title: 'Pricing',
+        },
+        name: 'pricing',
+        path: '/pricing',
+    },
+    {
         component: () => import(/* webpackChunkName: '404' */ '@/pages/404/404.vue'),
         meta: {
             title: 'Page not found',

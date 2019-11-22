@@ -24,6 +24,7 @@ module.exports = {
     },
     root: true,
     rules: {
+        'import/prefer-default-export': 'off',
         indent: ['error', 4],
         'no-console': production ? 'error' : 'off',
         'no-debugger': production ? 'error' : 'off',
