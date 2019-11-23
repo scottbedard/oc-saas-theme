@@ -32,7 +32,7 @@ export default {
             getProducts().then((response) => {
                 // success
                 if (this.requestId === id) {
-                    this.products = response.data.data;
+                    this.products = response.data;
                 }
             }, () => {
                 // failed

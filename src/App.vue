@@ -12,11 +12,17 @@ body {
 </style>
 
 <template>
-    <div class="bg-gray-200 h-full" id="app">
+    <div class="flex flex-col min-h-screen" id="app">
         <Header />
 
-        <div class="container mx-auto p-4 pt-0">
-            <router-view />
+        <div class="flex-1">
+            <div class="container mx-auto p-4 pt-0">
+                <router-view />
+            </div>
+        </div>
+
+        <div>
+            Footer
         </div>
     </div>
 </template>

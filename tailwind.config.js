@@ -20,18 +20,5 @@ module.exports = {
             ],
         }
     },
-    variants: [
-        'active',
-        'disabled',
-        'even',
-        'first',
-        'focus',
-        'focus-within',
-        'group-hover',
-        'hover',
-        'last',
-        'odd',
-        'responsive',
-        'visited', 
-    ],
+    variants: {},
 };
