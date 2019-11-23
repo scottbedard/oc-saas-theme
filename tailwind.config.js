@@ -1,7 +1,10 @@
 /* eslint-disable */
 
 module.exports = {
-    plugins: [],
+    plugins: [
+        // https://github.com/benface/tailwindcss-transitions
+        require('tailwindcss-transitions')(),
+    ],
     theme: {
         fontFamily: {
             sans: [

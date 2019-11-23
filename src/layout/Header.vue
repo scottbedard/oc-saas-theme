@@ -1,7 +1,11 @@
 <template>
     <header class="container flex items-center justify-between mx-auto p-4">
         <!-- logo -->
-        <div class="font-bold text-2xl">oc-saas-theme</div>
+        <router-link
+            class="flex font-bold items-center text-gray-900 text-lg tracking-wide hover:text-red-600"
+            :to="{ name: 'home' }">
+            <img class="mr-2 w-8" src="../assets/logo.svg" /> saastober
+        </router-link>
 
         <!-- navigation -->
         <span class="md:hidden">Mobile nav</span>
@@ -22,10 +26,6 @@ export default {
     computed: {
         links() {
             return [
-                {
-                    to: { name: 'home' },
-                    text: 'Home',
-                },
                 {
                     to: { name: 'about' },
                     text: 'About',

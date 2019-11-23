@@ -28,6 +28,7 @@ module.exports = {
     rules: {
         'import/prefer-default-export': 'off',
         'indent': ['error', 4],
+        'max-len': 0,
         'no-console': production ? 'error' : 'off',
         'no-debugger': production ? 'error' : 'off',
     },
