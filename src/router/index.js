@@ -21,6 +21,14 @@ const routes = [
         path: '/about',
     },
     {
+        component: () => import(/* webpackChunkName: 'signup' */ '@/pages/signup/Signup.vue'),
+        meta: {
+            title: 'Sign up',
+        },
+        name: 'signup',
+        path: '/signup',
+    },
+    {
         component: () => import(/* webpackChunkName: 'pricing' */ '@/pages/pricing/Pricing.vue'),
         meta: {
             title: 'Pricing',

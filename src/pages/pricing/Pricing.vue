@@ -52,13 +52,16 @@
 
 <script>
 import { get } from 'lodash-es';
-import Button from '@/components/ui/Button.vue';
-import Card from '@/components/ui/Card.vue';
-import FadeTransition from '@/components/transitions/FadeTransition.vue';
-import Page from '@/components/layout/Page.vue';
-import Products from '@/components/api/Products.vue';
-import Spinner from '@/components/ui/Spinner.vue';
 import { formatCurrency } from '@/app/utils/formatters';
+
+import {
+    Button,
+    Card,
+    FadeTransition,
+    Page,
+    Products,
+    Spinner,
+} from '@/components';
 
 export default {
     components: {

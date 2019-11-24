@@ -9,36 +9,54 @@
 
         <!-- navigation -->
         <span class="md:hidden">Mobile nav</span>
-        <nav class="hidden md:block">
-            <router-link
-                v-for="(link, index) in links"
-                v-text="link.text"
-                class="mr-8 hover:text-red-400 last:mr-0 md:mr-12"
-                :key="index"
-                :to="link.to"
-            />
+        <nav class="hidden text-right md:block">
+            <template v-if="isAuthenticated">
+                <div>Welcome back {{ user.name }}</div>
+                <a
+                    v-text="'Sign out'"
+                    class="mr-8 hover:text-red-400 last:mr-0 md:mr-12"
+                    href="#"
+                    @click.prevent="signout"
+                />
+            </template>
+            <template v-else>
+                <router-link
+                    v-for="(link, index) in links"
+                    v-text="link.text"
+                    class="mr-8 hover:text-red-400 last:mr-0 md:mr-12"
+                    :key="index"
+                    :to="link.to"
+                />
+            </template>
         </nav>
     </header>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
+
 export default {
     computed: {
+        ...mapGetters('user', [
+            'isAuthenticated',
+        ]),
+        ...mapState('user', [
+            'user',
+        ]),
         links() {
             return [
                 {
-                    to: { name: 'about' },
-                    text: 'About',
-                },
-                {
-                    to: '/pricing',
-                    text: 'Pricing',
-                },
-                {
-                    to: '/signin',
-                    text: 'Sign In',
+                    to: { name: 'signup' },
+                    text: 'Sign up',
                 },
             ];
+        },
+    },
+    methods: {
+        signout() {
+            this.$store.dispatch('user/logout').then(() => {
+                this.$router.push({ name: 'home' });
+            });
         },
     },
 };

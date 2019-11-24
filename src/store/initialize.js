@@ -6,6 +6,6 @@
 export default function initialize(store, data) {
     // user
     if (data.user) {
-        console.log('user!', data.user);
+        store.commit('user/setUser', data.user);
     }
 }
