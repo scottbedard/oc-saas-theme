@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 /**
- * Register a user.
+ * Authenticate a user.
  *
- * @param  {object}     data
  * @return {Promise}
  */
-export function register(data) {
-    return axios.post('/api/rainlab/user/users', data);
+export function login(credentials) {
+    return axios.post('/api/rainlab/user/auth/login', credentials);
 }
 
 /**
@@ -17,4 +16,14 @@ export function register(data) {
  */
 export function logout() {
     return axios.get('/api/rainlab/user/auth/logout');
+}
+
+/**
+ * Register a user.
+ *
+ * @param  {object}     data
+ * @return {Promise}
+ */
+export function register(data) {
+    return axios.post('/api/rainlab/user/users', data);
 }
