@@ -12,9 +12,14 @@
         <nav class="hidden text-right md:block">
             <template v-if="isAuthenticated">
                 <div>Welcome back {{ user.name }}</div>
+                <router-link
+                    class="mr-8 hover:text-red-400"
+                    :to="{ name: 'account' }">
+                    My Account
+                </router-link>
                 <a
                     v-text="'Sign out'"
-                    class="mr-8 hover:text-red-400 last:mr-0 md:mr-12"
+                    class="hover:text-red-400"
                     href="#"
                     @click.prevent="signout"
                 />
@@ -45,6 +50,10 @@ export default {
         ]),
         links() {
             return [
+                {
+                    to: { name: 'signin' },
+                    text: 'Sign in',
+                },
                 {
                     to: { name: 'signup' },
                     text: 'Sign up',

@@ -5,6 +5,22 @@ Vue.use(VueRouter);
 
 const routes = [
     {
+        component: () => import(/* webpackChunkName: 'about' */ '@/pages/about/About.vue'),
+        meta: {
+            title: 'About us',
+        },
+        name: 'about',
+        path: '/about',
+    },
+    {
+        component: () => import(/* webpackChunkName: 'account' */ '@/pages/account/Account.vue'),
+        meta: {
+            title: 'Account',
+        },
+        name: 'account',
+        path: '/account',
+    },
+    {
         component: () => import(/* webpackChunkName: 'home' */ '@/pages/home/Home.vue'),
         meta: {
             title: 'Home',
@@ -13,12 +29,12 @@ const routes = [
         path: '/',
     },
     {
-        component: () => import(/* webpackChunkName: 'about' */ '@/pages/about/About.vue'),
+        component: () => import(/* webpackChunkName: 'signin' */ '@/pages/signin/Signin.vue'),
         meta: {
-            title: 'About us',
+            title: 'Sign in',
         },
-        name: 'about',
-        path: '/about',
+        name: 'signin',
+        path: '/signin',
     },
     {
         component: () => import(/* webpackChunkName: 'signup' */ '@/pages/signup/Signup.vue'),

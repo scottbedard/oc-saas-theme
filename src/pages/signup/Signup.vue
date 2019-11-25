@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <h1 class="font-thin mb-6 text-5xl text-center">Welcome to the team!</h1>
+        <h1 class="font-thin mb-6 text-5xl text-center">Create an account</h1>
 
         <form @submit.prevent="signup">
             <Card class="max-w-2xl mx-auto" padded>
