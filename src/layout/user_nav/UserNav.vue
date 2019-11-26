@@ -46,7 +46,7 @@ export default {
                 {
                     icon: 'fa-user-circle-o',
                     text: 'My account',
-                    to: { name: 'account' },
+                    to: { name: 'account:settings' },
                 },
                 {
                     icon: 'fa-sign-out',
@@ -68,6 +68,9 @@ export default {
                 this.$router.push({ name: 'home' });
             });
         },
+    },
+    watch: {
+        $route: 'collapse',
     },
 };
 </script>

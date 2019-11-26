@@ -14,6 +14,24 @@ const routes = [
     },
     {
         component: () => import(/* webpackChunkName: 'account' */ '@/pages/account/Account.vue'),
+        children: [
+            {
+                component: () => import(/* webpackChunkName: 'accountBilling' */ '@/pages/account/billing/Billing.vue'),
+                meta: {
+                    title: 'Billing Information',
+                },
+                name: 'account:billing',
+                path: 'billing',
+            },
+            {
+                component: () => import(/* webpackChunkName: 'accountSettings' */ '@/pages/account/settings/Settings.vue'),
+                meta: {
+                    title: 'Account Settings',
+                },
+                name: 'account:settings',
+                path: '',
+            },
+        ],
         meta: {
             title: 'Account',
         },

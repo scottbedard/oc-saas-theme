@@ -1,12 +1,15 @@
 <template>
-    <div class="home">
+    <Page>
         <h1>Hello from the home page</h1>
-        <router-link :to="{ name: 'about' }">About</router-link>
-    </div>
+    </Page>
 </template>
 
 <script>
+import { Page } from '@/components';
+
 export default {
-    // ...
+    components: {
+        Page,
+    },
 };
 </script>
