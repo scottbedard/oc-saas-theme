@@ -1837,6 +1837,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bezier-easing@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/bezier-easing/-/bezier-easing-2.1.0.tgz#c04dfe8b926d6ecaca1813d69ff179b7c2025d86"
+
 bfj@^6.1.1:
   version "6.1.2"
   resolved "https://registry.yarnpkg.com/bfj/-/bfj-6.1.2.tgz#325c861a822bcb358a41c78a33b8e6e2086dde7f"
@@ -8140,6 +8144,12 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
+spyfu-vue-utils@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/spyfu-vue-utils/-/spyfu-vue-utils-0.8.0.tgz#f3d6ad5ce908a8af25b158e98f3d1b6ed839ea3f"
+  dependencies:
+    bezier-easing "^2.1.0"
+
 spyfu-vuex-helpers@^0.12.4:
   version "0.12.4"
   resolved "https://registry.yarnpkg.com/spyfu-vuex-helpers/-/spyfu-vuex-helpers-0.12.4.tgz#cf6715b7e0ed85373ed38532126f9c40ff139388"
@@ -8445,6 +8455,12 @@ table@^5.2.3:
     lodash "^4.17.14"
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
+
+tailwindcss-transforms@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-transforms/-/tailwindcss-transforms-2.2.0.tgz#3e0e594a2b34a056714d5fe539e2ace3226edf28"
+  dependencies:
+    lodash "^4.17.11"
 
 tailwindcss-transitions@^2.1.0:
   version "2.1.0"
