@@ -1,5 +1,5 @@
 <template>
-    <label class="font-bold text-gray-700 tracking-wide" :for="target">
+    <label class="text-gray-700 tracking-wide" :for="target">
         <slot />
     </label>
 </template>

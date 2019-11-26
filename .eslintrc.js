@@ -10,6 +10,11 @@ module.exports = {
         'plugin:vue/essential',
         '@vue/airbnb',
     ],
+    globals: {
+        Stripe: 'readonly',
+        app: 'readonly',
+        stripe: 'readonly',
+    },
     overrides: [
         {
             files: [

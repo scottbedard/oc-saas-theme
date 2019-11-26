@@ -35,7 +35,6 @@ const routes = [
         meta: {
             title: 'Account',
         },
-        name: 'account',
         path: '/account',
     },
     {

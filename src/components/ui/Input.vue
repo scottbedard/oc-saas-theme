@@ -1,3 +1,9 @@
+<style scoped>
+    input::placeholder {
+        @apply text-gray-600;
+    }
+</style>
+
 <template>
     <div>
         <Label

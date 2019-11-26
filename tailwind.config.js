@@ -32,6 +32,15 @@ module.exports = {
             'full': '100%',
             'half': '50%',
         },
+
+        // https://tailwindcss.com/docs/breakpoints/
+        screens: {
+            'xs': '480px',
+            'sm': '640px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+        }
     },
     variants: {
         margin: ['last', 'responsive'],

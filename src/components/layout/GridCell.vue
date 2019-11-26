@@ -16,6 +16,20 @@
             'w-11/12': initial == 11,
             'w-full': initial > 11,
 
+            'xs:hidden': xs < 1,
+            'xs:w-1/12': xs == 1,
+            'xs:w-2/12': xs == 2,
+            'xs:w-3/12': xs == 3,
+            'xs:w-4/12': xs == 4,
+            'xs:w-5/12': xs == 5,
+            'xs:w-6/12': xs == 6,
+            'xs:w-7/12': xs == 7,
+            'xs:w-8/12': xs == 8,
+            'xs:w-9/12': xs == 9,
+            'xs:w-10/12': xs == 10,
+            'xs:w-11/12': xs == 11,
+            'xs:w-full': xs > 11,
+
             'sm:hidden': sm < 1,
             'sm:w-1/12': sm == 1,
             'sm:w-2/12': sm == 2,
@@ -81,6 +95,9 @@ export default {
     props: {
         initial: {
             default: 12,
+            type: [Number, String],
+        },
+        xs: {
             type: [Number, String],
         },
         sm: {

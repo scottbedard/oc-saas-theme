@@ -1,12 +1,13 @@
 <template>
     <Page>
         <Grid padded>
-            <GridCell sm="4" lg="3">
+            <GridCell sm="4">
+                <div class="mb-1 text-gray-700 text-lg">Profile</div>
                 <Card>
                     <CardNav :links="links" />
                 </Card>
             </GridCell>
-            <GridCell sm="8" lg="9">
+            <GridCell sm="8">
                 <router-view />
             </GridCell>
         </Grid>

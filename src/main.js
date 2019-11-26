@@ -12,12 +12,9 @@ boot(Vue);
 
 // set initial data from the dom
 const vuetober = document.querySelector('meta[name=vuetober]');
+const data = JSON.parse(vuetober.getAttribute('content'));
 
-if (vuetober) {
-    const data = JSON.parse(vuetober.getAttribute('content'));
-
-    initialize(store, data);
-}
+initialize(store, data);
 
 // create our application and mount it to the dom
 const app = new Vue({
@@ -26,4 +23,6 @@ const app = new Vue({
     render: (h) => h(App),
 }).$mount('#app');
 
+// define globals
 window.app = app;
+window.stripe = Stripe(data.stripe_token);
