@@ -18,7 +18,7 @@ export { default as FadeTransition } from './transitions/FadeTransition.vue';
 //
 // user interfaces
 //
-export { default as Avatar } from './ui/avatar.vue';
+export { default as Avatar } from './ui/Avatar.vue';
 export { default as Button } from './ui/Button.vue';
 export { default as Card } from './ui/Card.vue';
 export { default as CardNav } from './ui/CardNav.vue';

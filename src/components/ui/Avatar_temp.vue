@@ -25,6 +25,7 @@ export default {
             default: null,
             type: Object,
         },
+
     },
 };
 </script>
