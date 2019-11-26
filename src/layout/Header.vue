@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
-import GuestNav from './guest_nav/guest_nav.vue';
-import UserNav from './user_nav/user_nav.vue';
+import GuestNav from './guest_nav/GuestNav.vue';
+import UserNav from './user_nav/UserNav.vue';
 
 export default {
     computed: {
