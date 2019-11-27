@@ -31,7 +31,10 @@
                                         class="ml-3 hover:text-yellow-500"
                                         href="#"
                                         title="Make default"
-                                        @click.prevent>
+                                        :class="{
+                                            'text-yellow-500': isDefault(card),
+                                        }"
+                                        @click.prevent="makeDefault(card)">
                                         <i class="fa fa-star" />
                                     </a>
                                     <a
@@ -71,6 +74,7 @@
 <script>
 import CardLogo from './card_logo/CardLogo.vue';
 import { createCard, deleteCard, getCards } from '@/app/repositories/cards';
+import { updateDefaultSource } from '@/app/repositories/customers';
 
 import {
     Button, Card, Grid, GridCell,
@@ -85,8 +89,10 @@ export default {
             adding: false,
             card: null,
             cards: [],
-            removing: false,
+            defaultSource: null,
             fetching: false,
+            removing: false,
+            updating: false,
         };
     },
     mounted() {
@@ -99,6 +105,11 @@ export default {
         Grid,
         GridCell,
     },
+    computed: {
+        isDefault() {
+            return (card) => card.id === this.defaultSource;
+        },
+    },
     methods: {
         fetchCards() {
             this.fetching = true;
@@ -106,8 +117,20 @@ export default {
             getCards().then((response) => {
                 // success
                 this.cards = response.data.data;
+                this.defaultSource = response.data.default_source;
             }).finally(() => {
                 this.fetching = false;
+            });
+        },
+        makeDefault(card) {
+            this.updating = true;
+
+            updateDefaultSource(card.id).then(() => {
+                // success
+                this.fetchCards();
+            }).finally(() => {
+                // complete
+                this.updating = false;
             });
         },
         mountStripeElements() {
@@ -141,6 +164,9 @@ export default {
             deleteCard(card.id).then(() => {
                 // success
                 this.fetchCards();
+            }).finally(() => {
+                // complete
+                this.remoing = false;
             });
         },
         save() {
