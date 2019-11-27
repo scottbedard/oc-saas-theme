@@ -11,6 +11,16 @@ export function createCard(token) {
 }
 
 /**
+ * Delete a card.
+ *
+ * @param  {string}     cardId
+ * @return {Promise}
+ */
+export function deleteCard(cardId) {
+    return axios.delete(`/api/bedard/saas/cards/${cardId}`);
+}
+
+/**
  * Fetch the authenticated users cards.
  */
 export function getCards() {

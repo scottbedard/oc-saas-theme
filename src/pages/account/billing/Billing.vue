@@ -38,7 +38,7 @@
                                         class="ml-3 hover:text-red-500"
                                         href="#"
                                         title="Delete"
-                                        @click.prevent>
+                                        @click.prevent="remove(card)">
                                         <i class="fa fa-trash-o" />
                                     </a>
                                 </td>
@@ -70,7 +70,7 @@
 
 <script>
 import CardLogo from './card_logo/CardLogo.vue';
-import { createCard, getCards } from '@/app/repositories/cards';
+import { createCard, deleteCard, getCards } from '@/app/repositories/cards';
 
 import {
     Button, Card, Grid, GridCell,
@@ -85,6 +85,8 @@ export default {
             adding: false,
             card: null,
             cards: [],
+            removing: false,
+            fetching: false,
         };
     },
     mounted() {
@@ -132,6 +134,14 @@ export default {
             this.card.mount(this.$refs.card);
 
             this.$on('hook:beforeDestroy', this.card.unmount);
+        },
+        remove(card) {
+            this.removing = true;
+
+            deleteCard(card.id).then(() => {
+                // success
+                this.fetchCards();
+            });
         },
         save() {
             this.adding = true;
