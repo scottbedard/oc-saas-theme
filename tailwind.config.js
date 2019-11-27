@@ -43,6 +43,7 @@ module.exports = {
         }
     },
     variants: {
+        borderWidth: ['last', 'responsive'],
         margin: ['last', 'responsive'],
     },
 };

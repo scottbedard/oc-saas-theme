@@ -1,5 +1,5 @@
 <style scoped>
-    [data-grid-padded] /deep/ [data-grid-cell] {
+    [data-grid-padded] /deep/ > [data-grid-cell] {
         @apply p-3;
     }
 </style>
