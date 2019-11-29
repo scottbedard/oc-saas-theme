@@ -3,8 +3,13 @@
         <div class="mb-1 text-gray-700 text-lg">Payment Methods</div>
         <form @submit.prevent="save">
             <Card padded>
+                <!-- loading -->
+                <div v-if="loading" class="text-center pb-6" key="loading">
+                    <Spinner />
+                </div>
+
                 <!-- list -->
-                <div class="mb-6">
+                <div v-else class="mb-6">
                     <table class="w-full">
                         <thead>
                             <tr>
@@ -77,7 +82,7 @@ import { createCard, deleteCard, getCards } from '@/app/repositories/cards';
 import { updateDefaultSource } from '@/app/repositories/customers';
 
 import {
-    Button, Card, Grid, GridCell,
+    Button, Card, Grid, GridCell, Spinner,
 } from '@/components';
 
 export default {
@@ -104,10 +109,14 @@ export default {
         CardLogo,
         Grid,
         GridCell,
+        Spinner,
     },
     computed: {
         isDefault() {
             return (card) => card.id === this.defaultSource;
+        },
+        loading() {
+            return this.adding || this.fetching || this.removing || this.updating;
         },
     },
     methods: {
@@ -166,7 +175,7 @@ export default {
                 this.fetchCards();
             }).finally(() => {
                 // complete
-                this.remoing = false;
+                this.removing = false;
             });
         },
         save() {
