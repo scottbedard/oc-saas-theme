@@ -8,6 +8,11 @@
                     <Spinner />
                 </div>
 
+                <!-- empty -->
+                <div v-else-if="empty" class="text-center pb-6" key="empty">
+                    No payment methods have been added yet.
+                </div>
+
                 <!-- list -->
                 <div v-else class="mb-6">
                     <table class="w-full">
@@ -112,6 +117,9 @@ export default {
         Spinner,
     },
     computed: {
+        empty() {
+            return this.cards.length === 0;
+        },
         isDefault() {
             return (card) => card.id === this.defaultSource;
         },
