@@ -7,5 +7,5 @@ import axios from 'axios';
  * @return {Promise}
  */
 export function updateDefaultSource(source) {
-    return axios.post('/api/bedard/saas/customers/default-source', { source });
+    return axios.post('/api/bedard/saas/user/customer/default-source', { source });
 }

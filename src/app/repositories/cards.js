@@ -7,7 +7,7 @@ import axios from 'axios';
  * @return {Promise}
  */
 export function createCard(token) {
-    return axios.post('/api/bedard/saas/cards', { token });
+    return axios.post('/api/bedard/saas/user/cards', { token });
 }
 
 /**
@@ -17,12 +17,12 @@ export function createCard(token) {
  * @return {Promise}
  */
 export function deleteCard(cardId) {
-    return axios.delete(`/api/bedard/saas/cards/${cardId}`);
+    return axios.delete(`/api/bedard/saas/user/cards/${cardId}`);
 }
 
 /**
  * Fetch the authenticated users cards.
  */
 export function getCards() {
-    return axios.get('/api/bedard/saas/cards');
+    return axios.get('/api/bedard/saas/user/cards');
 }
