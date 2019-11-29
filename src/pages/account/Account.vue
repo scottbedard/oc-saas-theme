@@ -40,6 +40,11 @@ export default {
                     text: 'Billing',
                     to: { name: 'account:billing' },
                 },
+                {
+                    icon: 'fa-calendar-o',
+                    text: 'Subscription',
+                    to: { name: 'account:subscription' },
+                },
             ];
         },
     },
