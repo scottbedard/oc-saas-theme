@@ -34,7 +34,7 @@ const routes = [
             {
                 component: () => import(/* webpackChunkName: 'accountSubscription' */ '@/pages/account/subscription/Subscription.vue'),
                 meta: {
-                    title: 'Subscription,',
+                    title: 'Subscription',
                 },
                 name: 'account:subscription',
                 path: 'subscription',
