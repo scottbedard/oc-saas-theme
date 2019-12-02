@@ -16,8 +16,11 @@
                             v-for="plan in product.plans.data"
                             class="border-2 flex h-16 items-center justify-center mb-6 mr-6 rounded w-full xs:h-32 xs:w-32"
                             href="#"
+                            :class="{
+                                'border-blue-500': hasPlan(plan),
+                            }"
                             :key="plan.id"
-                            @click.prevent="select(plan)">
+                            @click.prevent="selectPlan(plan)">
                             <div class="text-center">
                                 ${{ formatCurrency(plan.amount) }}/{{ plan.interval }}
                             </div>
@@ -32,7 +35,7 @@
 <script>
 import { Card, Spinner } from '@/components';
 import { getProductsWithPlans } from '@/app/repositories/products';
-import { getSubscriptions } from '@/app/repositories/subscriptions';
+import { changeSubscriptionPlan, createSubscription, getSubscriptions } from '@/app/repositories/subscriptions';
 import { formatCurrency } from '@/app/utils/formatters';
 
 export default {
@@ -42,10 +45,12 @@ export default {
     },
     data() {
         return {
+            creatingSubscription: false,
             fetchingProducts: false,
             fetchingSubscriptions: false,
             products: [],
             subscriptions: [],
+            updatingSubscription: false,
         };
     },
     components: {
@@ -59,11 +64,28 @@ export default {
         formatCurrency() {
             return formatCurrency;
         },
+        hasPlan() {
+            return (plan) => this.subscriptions.find((subscription) => subscription.plan.id === plan.id);
+        },
         loading() {
-            return this.fetchingSubscriptions || this.fetchingProducts;
+            return this.creatingSubscription
+                || this.fetchingSubscriptions
+                || this.fetchingProducts
+                || this.updatingSubscription;
         },
     },
     methods: {
+        createSubscription(plan) {
+            this.creatingSubscription = true;
+
+            createSubscription(plan.id).then(() => {
+                // success
+                this.fetchSubscriptions();
+            }).finally(() => {
+                // complete
+                this.creatingSubscription = false;
+            });
+        },
         fetchProducts() {
             this.fetchingProducts = true;
 
@@ -86,8 +108,26 @@ export default {
                 this.fetchingSubscriptions = false;
             });
         },
-        select(plan) {
-            console.log('selecting', plan);
+        selectPlan(plan) {
+            const product = this.products.find((obj) => obj.id === plan.product);
+            const subscription = product && this.subscriptions.find((obj) => obj.plan && obj.plan.product === product.id);
+
+            if (subscription) {
+                this.updateSubscription(subscription, plan);
+            } else {
+                this.createSubscription(plan);
+            }
+        },
+        updateSubscription(subscription, plan) {
+            this.updatingSubscription = true;
+
+            changeSubscriptionPlan(subscription.id, plan.id).then(() => {
+                // success
+                this.fetchSubscriptions();
+            }).finally(() => {
+                // complete
+                this.updatingSubscription = false;
+            });
         },
     },
 };
