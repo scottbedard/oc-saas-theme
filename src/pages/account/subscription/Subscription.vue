@@ -10,19 +10,35 @@
             <!-- empty -->
             <div v-else key="products">
                 <div v-for="product in products" :key="product.id">
-                    <div class="font-bold mb-2">{{ product.name }}</div>
-                    <div class="flex flex-wrap -mb-6 -mr-6">
+                    <div class="flex mb-2">
+                        <div v-text="product.name" class="font-bold mr-2" />
+                        <a
+                            class="hover:text-red-500"
+                            href="#"
+                            title="Cancel subscription"
+                            @click.prevent="cancel(product)">
+                            <i class="fa fa-trash-o" />
+                        </a>
+                    </div>
+                    <div class="flex flex-wrap -mr-6">
                         <a
                             v-for="plan in product.plans.data"
-                            class="border-2 flex h-16 items-center justify-center mb-6 mr-6 rounded w-full xs:h-32 xs:w-32"
+                            class="border-2 flex items-center justify-center mb-6 mr-6 p-4 rounded w-full md:w-48"
                             href="#"
                             :class="{
-                                'border-blue-500': hasPlan(plan),
+                                'border-blue-500': planSubscription(plan) && !isCancelling(plan),
+                                'border-red-500': planSubscription(plan) && isCancelling(plan),
                             }"
                             :key="plan.id"
                             @click.prevent="selectPlan(plan)">
-                            <div class="text-center">
-                                ${{ formatCurrency(plan.amount) }}/{{ plan.interval }}
+                            <div>
+                                <div class="text-center">
+                                    ${{ formatCurrency(plan.amount) }}/{{ plan.interval }}
+                                </div>
+                                <div class="text-center text-gray-600 text-xs">
+                                    <span v-if="isCancelling(plan)" key="expire">Expires {{ planEndDate(plan) }}</span>
+                                    <span v-else-if="planSubscription(plan)" key="renew">Renews {{ planEndDate(plan) }}</span>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -33,9 +49,12 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { Card, Spinner } from '@/components';
 import { getProductsWithPlans } from '@/app/repositories/products';
-import { changeSubscriptionPlan, createSubscription, getSubscriptions } from '@/app/repositories/subscriptions';
+import {
+    cancelSubscrption, changeSubscriptionPlan, createSubscription, getSubscriptions,
+} from '@/app/repositories/subscriptions';
 import { formatCurrency } from '@/app/utils/formatters';
 
 export default {
@@ -45,6 +64,7 @@ export default {
     },
     data() {
         return {
+            cancelling: false,
             creatingSubscription: false,
             fetchingProducts: false,
             fetchingSubscriptions: false,
@@ -64,17 +84,49 @@ export default {
         formatCurrency() {
             return formatCurrency;
         },
-        hasPlan() {
-            return (plan) => this.subscriptions.find((subscription) => subscription.plan.id === plan.id);
+        isCancelling() {
+            return (plan) => {
+                const subscription = this.subscriptions.find((obj) => obj.plan.id === plan.id);
+
+                return subscription && subscription.cancel_at_period_end;
+            };
         },
         loading() {
-            return this.creatingSubscription
+            return this.cancelling
+                || this.creatingSubscription
                 || this.fetchingSubscriptions
                 || this.fetchingProducts
                 || this.updatingSubscription;
         },
+        planEndDate() {
+            return (plan) => {
+                const subscription = this.planSubscription(plan);
+
+                return moment.unix(subscription.current_period_end).format('MMM Do YYYY');
+            };
+        },
+        planSubscription() {
+            return (plan) => this.subscriptions.find((subscription) => subscription.plan.id === plan.id);
+        },
     },
     methods: {
+        cancel(product) {
+            this.cancelling = true;
+
+            const requests = product.plans.data.reduce((acc, plan) => {
+                const subscription = this.planSubscription(plan);
+
+                return subscription ? acc.concat(subscription) : acc;
+            }, []).map((subscription) => cancelSubscrption(subscription.id));
+
+            Promise.all(requests).then(() => {
+                // success
+                this.fetchSubscriptions();
+            }).finally(() => {
+                // complete
+                this.cancelling = false;
+            });
+        },
         createSubscription(plan) {
             this.creatingSubscription = true;
 

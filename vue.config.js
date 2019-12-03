@@ -5,4 +5,9 @@ module.exports = {
             fix: true
         });
     },
+    pluginOptions: {
+        moment: {
+            locales: ['en'],
+        },
+    },
 };

@@ -1,6 +1,16 @@
 import axios from 'axios';
 
 /**
+ * Cancel a subscription.
+ *
+ * @param  {string} subscriptionId
+ * @return {Promise}
+ */
+export function cancelSubscrption(subscriptionId) {
+    return axios.delete(`/api/bedard/saas/user/subscriptions/${subscriptionId}`);
+}
+
+/**
  * Update the user's subscription to a plan.
  *
  * @param  {string}     subscriptionId  Subscription ID to update.
