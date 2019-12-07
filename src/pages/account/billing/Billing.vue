@@ -74,16 +74,20 @@
             </Card>
         </form>
 
+        <!-- history -->
         <div class="mb-1 mt-8 text-gray-700 text-lg">Billing History</div>
         <Card padded>
-            Soon...
+            <History />
         </Card>
     </div>
 </template>
 
 <script>
+import moment from 'moment';
 import CardLogo from './card_logo/CardLogo.vue';
+import History from './history/History.vue';
 import { createCard, deleteCard, getCards } from '@/app/repositories/cards';
+import { formatCurrency } from '@/app/utils/formatters';
 import { updateDefaultSource } from '@/app/repositories/customers';
 
 import {
@@ -100,7 +104,7 @@ export default {
             card: null,
             cards: [],
             defaultSource: null,
-            fetching: false,
+            fetchingCards: false,
             removing: false,
             updating: false,
         };
@@ -110,6 +114,7 @@ export default {
     },
     components: {
         Button,
+        History,
         Card,
         CardLogo,
         Grid,
@@ -117,26 +122,32 @@ export default {
         Spinner,
     },
     computed: {
+        chargeDate() {
+            return (charge) => moment.unix(charge.created).format('MMM Do YYYY');
+        },
         empty() {
             return this.cards.length === 0;
+        },
+        formatCurrency() {
+            return formatCurrency;
         },
         isDefault() {
             return (card) => card.id === this.defaultSource;
         },
         loading() {
-            return this.adding || this.fetching || this.removing || this.updating;
+            return this.adding || this.fetchingCards || this.removing || this.updating;
         },
     },
     methods: {
         fetchCards() {
-            this.fetching = true;
+            this.fetchingCards = true;
 
             getCards().then((response) => {
                 // success
                 this.cards = response.data.data;
                 this.defaultSource = response.data.default_source;
             }).finally(() => {
-                this.fetching = false;
+                this.fetchingCards = false;
             });
         },
         makeDefault(card) {

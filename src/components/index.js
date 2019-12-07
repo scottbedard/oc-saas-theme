@@ -8,6 +8,7 @@ export { default as Page } from './layout/Page.vue';
 //
 // resources
 //
+export { default as Charges } from './resources/Charges.vue';
 export { default as Products } from './resources/Products.vue';
 
 //
