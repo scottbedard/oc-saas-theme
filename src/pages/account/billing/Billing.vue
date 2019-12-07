@@ -1,78 +1,9 @@
 <template>
     <div>
         <div class="mb-1 text-gray-700 text-lg">Payment Methods</div>
-        <form @submit.prevent="save">
-            <Card padded>
-                <!-- loading -->
-                <div v-if="loading" class="text-center pb-6" key="loading">
-                    <Spinner />
-                </div>
-
-                <!-- empty -->
-                <div v-else-if="empty" class="text-center pb-6" key="empty">
-                    No payment methods have been added yet.
-                </div>
-
-                <!-- list -->
-                <div v-else class="mb-6">
-                    <table class="w-full">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-left">Card</th>
-                                <th class="text-right">
-                                    <span class="xs:hidden">Exp</span>
-                                    <span class="hidden xs:inline">Expiration</span>
-                                </th>
-                                <th class="text-right">
-                                    <span class="hidden xs:inline">Manage</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="card in cards" class="h-10" :key="card.id">
-                                <td class="w-10">
-                                    <CardLogo :brand="card.brand" class="w-8" />
-                                </td>
-                                <td v-text="card.last4" />
-                                <td class="text-right whitespace-no-wrap">{{ card.exp_month }} / {{ card.exp_year }}</td>
-                                <td class="text-right">
-                                    <a
-                                        class="ml-3 hover:text-yellow-500"
-                                        href="#"
-                                        title="Make default"
-                                        :class="{
-                                            'text-yellow-500': isDefault(card),
-                                        }"
-                                        @click.prevent="makeDefault(card)">
-                                        <i class="fa fa-star" />
-                                    </a>
-                                    <a
-                                        class="ml-3 hover:text-red-500"
-                                        href="#"
-                                        title="Delete"
-                                        @click.prevent="remove(card)">
-                                        <i class="fa fa-trash-o" />
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- add -->
-                <Grid padded>
-                    <GridCell>
-                        <div class="bg-gray-200 cursor-text h-12 p-4 rounded" ref="card" />
-                    </GridCell>
-                    <GridCell>
-                        <div class="text-right">
-                            <Button primary>Add</Button>
-                        </div>
-                    </GridCell>
-                </Grid>
-            </Card>
-        </form>
+        <Card padded>
+            <Payment />
+        </Card>
 
         <!-- history -->
         <div class="mb-1 mt-8 text-gray-700 text-lg">Billing History</div>
@@ -83,141 +14,15 @@
 </template>
 
 <script>
-import moment from 'moment';
-import CardLogo from './card_logo/CardLogo.vue';
 import History from './history/History.vue';
-import { createCard, deleteCard, getCards } from '@/app/repositories/cards';
-import { formatCurrency } from '@/app/utils/formatters';
-import { updateDefaultSource } from '@/app/repositories/customers';
-
-import {
-    Button, Card, Grid, GridCell, Spinner,
-} from '@/components';
+import Payment from './payment/Payment.vue';
+import { Card } from '@/components';
 
 export default {
-    created() {
-        this.fetchCards();
-    },
-    data() {
-        return {
-            adding: false,
-            card: null,
-            cards: [],
-            defaultSource: null,
-            fetchingCards: false,
-            removing: false,
-            updating: false,
-        };
-    },
-    mounted() {
-        this.mountStripeElements();
-    },
     components: {
-        Button,
-        History,
         Card,
-        CardLogo,
-        Grid,
-        GridCell,
-        Spinner,
-    },
-    computed: {
-        chargeDate() {
-            return (charge) => moment.unix(charge.created).format('MMM Do YYYY');
-        },
-        empty() {
-            return this.cards.length === 0;
-        },
-        formatCurrency() {
-            return formatCurrency;
-        },
-        isDefault() {
-            return (card) => card.id === this.defaultSource;
-        },
-        loading() {
-            return this.adding || this.fetchingCards || this.removing || this.updating;
-        },
-    },
-    methods: {
-        fetchCards() {
-            this.fetchingCards = true;
-
-            getCards().then((response) => {
-                // success
-                this.cards = response.data.data;
-                this.defaultSource = response.data.default_source;
-            }).finally(() => {
-                this.fetchingCards = false;
-            });
-        },
-        makeDefault(card) {
-            this.updating = true;
-
-            updateDefaultSource(card.id).then(() => {
-                // success
-                this.fetchCards();
-            }).finally(() => {
-                // complete
-                this.updating = false;
-            });
-        },
-        mountStripeElements() {
-            const elements = stripe.elements();
-
-            const elementClasses = {
-                focus: 'focus',
-                empty: 'empty',
-                invalid: 'invalid',
-            };
-
-            const elementStyles = {
-                base: {
-                    fontSize: '1.125rem',
-                },
-            };
-
-            this.card = elements.create('card', {
-                classes: elementClasses,
-                iconStyle: 'solid',
-                style: elementStyles,
-            });
-
-            this.card.mount(this.$refs.card);
-
-            this.$on('hook:beforeDestroy', this.card.unmount);
-        },
-        remove(card) {
-            this.removing = true;
-
-            deleteCard(card.id).then(() => {
-                // success
-                this.fetchCards();
-            }).finally(() => {
-                // complete
-                this.removing = false;
-            });
-        },
-        save() {
-            this.adding = true;
-
-            // create the token
-            stripe.createToken(this.card).then((response) => {
-                const { error, token } = response;
-
-                this.card.clear();
-
-                if (!error) {
-                    // success
-                    return createCard(token.id);
-                }
-
-                return Promise.reject(error);
-            }).finally(() => {
-                // complete
-                this.adding = false;
-                this.fetchCards();
-            });
-        },
+        History,
+        Payment,
     },
 };
 </script>

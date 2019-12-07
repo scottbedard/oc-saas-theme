@@ -41,7 +41,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-xs text-center sm:text-right">
+                <div class="text-sm text-center sm:text-right">
                     <a
                         v-if="hasPrev"
                         href="#"
